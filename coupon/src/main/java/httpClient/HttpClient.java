@@ -20,13 +20,13 @@ public class HttpClient {
 		HttpClient http = new HttpClient();
 
 		System.out.println("Testing 1 - Send Http GET request");
-		http.sendGet();
+		//http.sendGet();
 	}
 
 	// HTTP GET request
-	private void sendGet() throws Exception {
+	public String sendGet(int number) throws Exception {
 
-		String url = "http://localhost:8080/test?companyId=2";
+		String url = "http://localhost:8080/company?companyId="+number;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -50,9 +50,9 @@ public class HttpClient {
 			response.append(inputLine);
 		}
 		in.close();
-
 		//print result
 		System.out.println(response.toString());
+		return response.toString();
 
 	}
 }

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import Models.Company;
+import httpClient.HttpClient;
 import Exceptions.CouponSystemException;
 import Facades.AdminFacade;
 import Facades.ClientType;
@@ -27,12 +28,15 @@ public class Junit  {
 
 	// ###################################### ===== Tests ===== ######################################################
 	@Test() 
-	public void test1_GetCompany() throws CouponSystemException, ParseException {
-        String expected = "{\"password\":\"234\",\"name\":\"companyB\",\"id\":2,\"email\":\"emailB@mail.com\"}";
-        JSONObject actual = logIn().getCompany(2);
-        assertEquals(expected.toString(), actual.toString());
-        writeToLogs(expected.equals(actual.toJSONString()));
+	public void test1_GetCompany() throws Exception {
+    HttpClient client =new HttpClient();
+    int conferenceIdNumber=2;
+		String expected = "{\"password\":\"234\",\"name\":\"companyB\",\"id\":2,\"email\":\"emailB@mail.com\"}";
+        String actual = client.sendGet(conferenceIdNumber);
+        //JSONObject actual = logIn().getCompany(2);
+        assertEquals(expected.toString(),actual.toString());
 	}
+	@Ignore
 	@Test()
 	public void test2_GetAllConpanies() throws CouponSystemException {
 		String expected = "{\"ArrayOfCompaniesObjects\":[{\"password\":\"123\",\"name\":\"companyA\",\"id\":1,\"email\":\"emailA@mail.com\"},{\"password\":\"234\",\"name\":\"companyB\",\"id\":2,\"email\":\"emailB@mail.com\"},{\"password\":\"testPass\",\"name\":\"new2Company\",\"id\":4,\"email\":\"Test@email.com\"},{\"password\":\"testPass\",\"name\":\"new3Company\",\"id\":5,\"email\":\"Test3@email.com\"},{\"password\":\"testPass\",\"name\":\"new4Company\",\"id\":6,\"email\":\"Test4@email.com\"}]}";
