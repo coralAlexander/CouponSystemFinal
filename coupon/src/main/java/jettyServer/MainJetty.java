@@ -1,4 +1,4 @@
-package jettyServerMain;
+package jettyServer;
 
 import java.text.ParseException;
 
@@ -8,15 +8,17 @@ import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import exceptions.CouponSystemException;
+import servlets.CompanyRequestsServlet;
 
 public class MainJetty {
 
 	public static void main(String[] args) throws Exception {
 		
-		AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
+		CompanyRequestsServlet companyRequestsServlet = new CompanyRequestsServlet();
+		
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(allRequestsServlet), "/company/*");
+        context.addServlet(new ServletHolder(companyRequestsServlet), "/company/*");
 
         Server server = new Server(8080);
         server.setHandler(context);

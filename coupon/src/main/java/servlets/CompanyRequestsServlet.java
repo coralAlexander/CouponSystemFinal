@@ -1,4 +1,4 @@
-package jettyServerMain;
+package servlets;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +24,12 @@ import java.util.Map;
  * @author alexander coral
  *
  */
-public class AllRequestsServlet extends HttpServlet {
+public class CompanyRequestsServlet extends HttpServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	static Logger logger = LoggerFactory.getLogger(AllRequestsServlet.class);
+	static Logger logger = LoggerFactory.getLogger(CompanyRequestsServlet.class);
 	
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
@@ -49,7 +49,7 @@ public class AllRequestsServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> pageVariables = createPageVariablesMap(request, null);
+        /*Map<String, Object> pageVariables = createPageVariablesMap(request, null);
 
         String message = request.getParameter("message");
 
@@ -63,6 +63,7 @@ public class AllRequestsServlet extends HttpServlet {
         pageVariables.put("message", message == null ? "" : message);
 
         response.getWriter().println(PageGenerator.instance().getPage("page.html", pageVariables));
+    */
     }
 
     private static Map<String, Object> createPageVariablesMap(HttpServletRequest request, Company company) {

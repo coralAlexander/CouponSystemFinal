@@ -22,8 +22,8 @@ import models.Company;
  * @author Alexander Coral
  *
  */
-public class Junit  {
-	static Logger logger = LoggerFactory.getLogger(Junit.class);
+public class junit  {
+	static Logger logger = LoggerFactory.getLogger(junit.class);
 	
 
 	// ###################################### ===== Tests ===== ######################################################
