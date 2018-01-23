@@ -11,12 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import Models.Company;
+import exceptions.CouponSystemException;
+import facades.AdminFacade;
+import facades.ClientType;
 import httpClient.HttpClient;
-import Exceptions.CouponSystemException;
-import Facades.AdminFacade;
-import Facades.ClientType;
-import Main.CouponSystem;
+import main.CouponSystem;
+import models.Company;
 
 /**
  * @author Alexander Coral
