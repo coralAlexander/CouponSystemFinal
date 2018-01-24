@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.http.HttpHeader;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +31,28 @@ public class CompanyRequestsServlet extends HttpServlet {
 	static Logger logger = LoggerFactory.getLogger(CompanyRequestsServlet.class);
 	
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-
-    	String companyIdString = request.getParameter("companyId");
-    	int companyId = Integer.parseInt(companyIdString);
-    	CouponSystem cs1 = CouponSystem.getInstance();
-		AdminFacade af = null;
-			try {
-				af = (AdminFacade) cs1.login("admin", "1234", ClientType.ADMIN);
-				response.getWriter().println(af.getCompany(companyId));
-			} catch (CouponSystemException e) {
-				e.printStackTrace();
-			}	
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_OK);
-            logger.trace("Before switch");
+     String method=request.getParameter("method");
+        switch (method) {
+		case "getCompany":
+			String companyIdString = request.getParameter("companyId");
+	    	int companyId = Integer.parseInt(companyIdString);
+				try {
+				    AdminFacade	af = logIn ();
+					response.getWriter().println(af.getCompany(companyId));
+				} catch (CouponSystemException e) {
+					e.printStackTrace();
+				}	
+				response.setContentType("application/json");
+				response.setStatus(HttpServletResponse.SC_OK);
+	            logger.trace("getCompany method");
+			break;
+		case "":
+			
+			break;
+		default:
+			break;
+		}
+    	
     }
 
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -75,5 +82,13 @@ public class CompanyRequestsServlet extends HttpServlet {
         pageVariables.put("sessionId", request.getSession().getId());
         pageVariables.put("parameters", request.getParameterMap().toString());
         return pageVariables;
+    }
+    
+    public AdminFacade logIn () throws CouponSystemException {
+    	CouponSystem cs1 = CouponSystem.getInstance();
+		AdminFacade af = null;
+		af = (AdminFacade) cs1.login("admin", "1234", ClientType.ADMIN);
+    	return af;
+    	
     }
 }

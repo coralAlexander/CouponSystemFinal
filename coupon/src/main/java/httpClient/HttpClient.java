@@ -26,7 +26,7 @@ public class HttpClient {
 	// HTTP GET request
 	public String sendGet(int number) throws Exception {
 
-		String url = "http://localhost:8080/company?companyId="+number;
+		String url = "http://localhost:8080/company?method=getCompany&companyId="+number;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
