@@ -55,7 +55,7 @@ public class CSVparser {
     
     private static boolean IsColumnPart(String text) {
         String trimText = text.trim();
-        //���� � ������ ���� ������� � ����� �� ��� �������������� ������ ��� ����� ���������� �������
+        
         return trimText.indexOf("\"") == trimText.lastIndexOf("\"") && trimText.endsWith("\"");
     }
 }
