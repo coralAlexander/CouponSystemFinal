@@ -20,8 +20,7 @@ public class CSVparser {
         }
        
     }
-
-   
+ 
     private static List<Company> ParseProductCsv(String filePath) throws IOException {
         
         List<Company> companies = new ArrayList<Company>();
@@ -39,8 +38,6 @@ public class CSVparser {
                     columnList.add(splitedText[i]);
                 }
             }
-            
-           
             Company company = new Company();
             int companyId=Integer.parseInt(columnList.get(0));
             company.setId(companyId);
@@ -55,7 +52,6 @@ public class CSVparser {
     
     private static boolean IsColumnPart(String text) {
         String trimText = text.trim();
-        
         return trimText.indexOf("\"") == trimText.lastIndexOf("\"") && trimText.endsWith("\"");
     }
 }
