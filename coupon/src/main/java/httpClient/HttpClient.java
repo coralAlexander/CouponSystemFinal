@@ -16,7 +16,7 @@ public class HttpClient {
 	private final String USER_AGENT = "Mozilla/5.0";
 
 	public static void main(String[] args) throws Exception {
-
+		
 		HttpClient http = new HttpClient();
 
 		System.out.println("Testing 1 - Send Http GET request");
@@ -54,6 +54,7 @@ public class HttpClient {
 		in.close();
 		//print result
 		System.out.println(response.toString());
+		
 		return response.toString();
 
 	}

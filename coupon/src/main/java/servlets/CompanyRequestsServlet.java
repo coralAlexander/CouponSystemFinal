@@ -4,9 +4,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
 
 import exceptions.CouponSystemException;
 import facades.AdminFacade;
@@ -16,6 +19,7 @@ import main.MainTest;
 import models.Company;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,12 +28,11 @@ import java.util.Map;
  *
  */
 public class CompanyRequestsServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	static Logger logger = LoggerFactory.getLogger(CompanyRequestsServlet.class);
 	
+    
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
      String method=request.getParameter("method");
         switch (method) {
@@ -37,14 +40,29 @@ public class CompanyRequestsServlet extends HttpServlet {
 			String companyIdString = request.getParameter("companyId");
 	    	int companyId = Integer.parseInt(companyIdString);
 				try {
-				    AdminFacade	af = logIn ();
-					response.getWriter().println(af.getCompany(companyId));
+				    AdminFacade	af = logIn (); // do the login and return Admin facade 
+				
+				   JSONObject actualJsonResponse = af.getCompany(companyId);
+				   
+				   String name =(String) actualJsonResponse.get("name");
+				   if (name != null ) {
+					   response.getWriter().println(actualJsonResponse);
+					   response.setContentType("application/json");
+						response.setStatus(HttpServletResponse.SC_OK);
+						logger.trace("getCompany method");   
+				   }
+				   else {
+					   response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				   }
+				
 				} catch (CouponSystemException e) {
 					e.printStackTrace();
 				}	
-				response.setContentType("application/json");
-				response.setStatus(HttpServletResponse.SC_OK);
-	            logger.trace("getCompany method");
+				
+				
+					
+		
+	          
 			break;
 		case "":
 			
