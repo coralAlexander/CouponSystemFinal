@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.omg.CORBA.portable.ApplicationException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.JsonObject;
 
 import exceptions.CouponSystemException;
+import exceptions.ErrorMessage;
 import facades.AdminFacade;
 import facades.ClientType;
 import main.CouponSystem;
@@ -33,15 +35,18 @@ public class CompanyRequestsServlet extends HttpServlet {
 	static Logger logger = LoggerFactory.getLogger(CompanyRequestsServlet.class);
 	
     
-    public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-     String method=request.getParameter("method");
+    @SuppressWarnings("unchecked")
+	public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    	 JSONObject jsonErrorObject = new JSONObject();
+		 ErrorMessage errorMessage = new ErrorMessage();
+    	
+    	String method=request.getParameter("method");
         switch (method) {
 		case "getCompany":
 			String companyIdString = request.getParameter("companyId");
 	    	int companyId = Integer.parseInt(companyIdString);
 				try {
-				    AdminFacade	af = logIn (); // do the login and return Admin facade 
-				
+				   AdminFacade	af = logIn (); // do the login and return Admin facade 
 				   JSONObject actualJsonResponse = af.getCompany(companyId);
 				   
 				   String name =(String) actualJsonResponse.get("name");
@@ -49,20 +54,18 @@ public class CompanyRequestsServlet extends HttpServlet {
 					   response.getWriter().println(actualJsonResponse);
 					   response.setContentType("application/json");
 						response.setStatus(HttpServletResponse.SC_OK);
-						logger.trace("getCompany method");   
+						logger.trace("getCompany method result : company successfully found.");   
 				   }
-				   else {
-					   response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				   else { 
+					   jsonErrorObject.put("ServiceException", errorMessage.toString());
+					   response.getWriter().println(jsonErrorObject);
+					   response.setStatus(HttpServletResponse.SC_OK);
+					   logger.trace("getCompany method result : company not found");
 				   }
 				
 				} catch (CouponSystemException e) {
 					e.printStackTrace();
-				}	
-				
-				
-					
-		
-	          
+				}	  
 			break;
 		case "":
 			
