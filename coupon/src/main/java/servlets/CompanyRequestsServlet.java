@@ -54,13 +54,13 @@ public class CompanyRequestsServlet extends HttpServlet {
 					   response.getWriter().println(actualJsonResponse);
 					   response.setContentType("application/json");
 						response.setStatus(HttpServletResponse.SC_OK);
-						logger.trace("getCompany method result : company successfully found.");   
+						logger.trace("getCompany method result : Company successfully found.");   
 				   }
 				   else { 
 					   jsonErrorObject.put("ServiceException", errorMessage.toString());
 					   response.getWriter().println(jsonErrorObject);
 					   response.setStatus(HttpServletResponse.SC_OK);
-					   logger.trace("getCompany method result : company not found");
+					   logger.trace("getCompany method result : Company not found");
 				   }
 				
 				} catch (CouponSystemException e) {

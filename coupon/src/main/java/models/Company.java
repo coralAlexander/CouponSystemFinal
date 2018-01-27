@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Company {
-
 	private int id;
 	private String name;
 	private String password;
